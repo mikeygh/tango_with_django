@@ -7,10 +7,30 @@
     </head>
 
     <body>
-        <h1>Rango says...</h1>
-        hello world! <strong>{{ boldmessage }}</strong><br />
-        <a href="/rango/about/">About</a><br />
-        <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" />
+        <h1>Rango says...hellow world</h1>
+        {% if categories %}
+            <ul>
+                {% for category in categories %}
+                <!-- Following line changed to add an HTML hyperlink -->
+                <li><a href="/rango/category/{{ category.slug }}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no categories present.</strong>
+        {% endif %}
+        <h1>Top 5 Pages:</h1>
+        {% if pageviews_list %}
+            <ul>
+                {% for page in pageviews_list %}
+                <!-- Following line changed to add an HTML hyperlink -->
+                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no Pages present.</strong>
+        {% endif %}
+        <a href="/rango/about/">About</a>
+        <a href="/rango/add_category/">Add a New Category</a><br />
     </body>
 
 </html>

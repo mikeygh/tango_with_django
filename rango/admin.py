@@ -1,6 +1,7 @@
 from django.contrib import admin
 from rango.models import Category, Page
 from django.contrib.admin.templatetags.admin_modify import prepopulated_fields_js
+from rango.models import UserProfile
 # Register your models here.
 
 class PageAdmin(admin.ModelAdmin) :
@@ -13,3 +14,4 @@ class CategoryAdmin(admin.ModelAdmin):
 # update the registration to include this customized interface.
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Page,PageAdmin)
+admin.site.register(UserProfile)

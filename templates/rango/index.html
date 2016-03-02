@@ -1,12 +1,7 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-{% load staticfiles %}
-<html>
-    <head>
-        <title>Rango</title>
-    </head>
+{% block body_block %}
 
-    <body>
     {% if user.is_authenticated %}
 		<h1>Rango says... hello {{ user.username }}!</h1>
 	{% else %}
@@ -16,7 +11,7 @@
             <ul>
                 {% for category in categories %}
                 <!-- Following line changed to add an HTML hyperlink -->
-                <li><a href="/rango/category/{{ category.slug }}">{{ category.name }}</a></li>
+                <li><a href="{% url 'category' category.slug %}">{{ category.name }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -26,23 +21,11 @@
         {% if pageviews_list %}
             <ul>
                 {% for page in pageviews_list %}
-                <!-- Following line changed to add an HTML hyperlink -->
-                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                  <!-- Following line changed to add an HTML hyperlink -->
+                  <li><a href="{{ page.url }}">{{ page.title }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
             <strong>There are no Pages present.</strong>
         {% endif %}
-	{% if user.is_authenticated %}
-		<a href="/rango/restricted/">Restricted Page</a><br />
-		<a href="/rango/logout/">Logout</a><br />
-		<a href="/rango/add_category/">Add a New Category</a><br />
-	{% else %}
-		<a href="/rango/register/">Register Here</a><br />
-		<a href="/rango/login/">Login</a><br />
-	{% endif %}
-
-	<a href="/rango/about/">About</a><br/>
-    </body>
-
-</html>
+{% endblock %}

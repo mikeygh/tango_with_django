@@ -1,12 +1,11 @@
-from django.http import HttpResponseRedirect, HttpResponse
+#from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 # Import the Category model
 from rango.models import Category,Page
-from django import views
 from rango.forms import CategoryForm,PageForm,UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login , logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.comments.admin import UsernameSearch
+#from django.contrib.comments.admin import UsernameSearch
 def index(request):
     # Query the database for a list of ALL categories currently stored.
     # Order the categories by no. likes in descending order.
@@ -21,8 +20,8 @@ def index(request):
     return render(request, 'rango/index.html', context_dict)
 
 def about(request):
-    context_dict = {'boldmessage': "here is the about page!"}
     
+    context_dict = {'boldmessage': "here is the about page!",}
     return render(request, 'rango/about.html', context_dict)
 
 def category(request, category_name_slug):
@@ -190,10 +189,13 @@ def user_login(request):
                 # If the account is valid and active, we can log the user in.
                 # We'll send the user back to the homepage.
                 login(request, user)
-                return HttpResponseRedirect('/rango/')
+                
+                #return HttpResponseRedirect('/rango/')
+                return render(request, 'rango/index.html', {})
             else:
                 # An inactive account was used - no logging in!
-                return HttpResponse("Your Rango account is disabled.")
+                #return HttpResponse("Your Rango account is disabled.")
+                return render(request,'rango/login.html', {'login_fail':"Your Rango account is disabled." })
         #Authentication failed, why?
         else:
             
@@ -201,8 +203,8 @@ def user_login(request):
             #print "Invalid login details: {0}, {1}".format(username, password)
             #return HttpResponse("Invalid login details supplied.")
             print "The username and passowrd were incorrect."
-            return HttpResponse("The username and password were incorrect.")
-
+            #return HttpResponse("The username and password were incorrect.")
+            return render(request, 'rango/login.html', {'login_fail' : "The username and password were incorrect."})
     # The request is not a HTTP POST, so display the login form.
     # This scenario would most likely be a HTTP GET.
     else:
@@ -212,7 +214,7 @@ def user_login(request):
     
 @login_required
 def restricted(request):
-    return HttpResponse("Since you're logged in, you can see this text!")
+    return render(request,'rango/restricted.html', {})
 
 
 # Use the login_required() decorator to ensure only those logged in can access the view.
@@ -222,4 +224,4 @@ def user_logout(request):
     logout(request)
 
     # Take the user back to the homepage.
-    return HttpResponseRedirect('/rango/')
+    return render(request,'rango/index.html', {})

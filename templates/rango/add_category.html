@@ -1,21 +1,17 @@
 {% extends 'base.html' %}
 
+{% load bootstrap_toolkit %}
+
+{% block title %}Add Category{% endblock %}
+
 {% block body_block %}
-        <h1>Add a Category</h1>
 
-        <form id="category_form" method="post" action="{% url 'add_category' %}">
-
-            {% csrf_token %}
-            {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
-
-            {% for field in form.visible_fields %}
-                {{ field.errors }}
-                {{ field.help_text }}
-                {{ field }}
-            {% endfor %}
-
-            <input type="submit" name="submit" value="Create Category" />
-        </form>
+	<form id="category_form" method="post" action="{% url 'add_category' %}">
+    	<h2 class="form-signin-heading">Add a Category</a></h2>
+    	{% csrf_token %}
+    	
+    	{{ form|as_bootstrap }}
+    	<br/>
+        <button class="btn btn-primary" type="submit" name="submit">Create Category</button>
+     </form>
 {% endblock %}

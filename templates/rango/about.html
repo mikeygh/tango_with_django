@@ -2,10 +2,14 @@
 
 {% load staticfiles %}
 
-{% block title %}About Rango{% endblock %}
+{% block title %}About{% endblock %}
 
 {% block body_block %}
-   <h1>Rango says...</h1>
-      <strong>{{ boldmessage }}</strong><br />
-      <img src="{% static "images/rango_about.jpg" %}" alt="About Rango" />
+    <div class="page-header">
+   		<h1>About</h1>
+    </div>
+    <div>
+   		<p></strong>.</p>
+   		<img  width="90" height="100" src="{% static "images/rango_about.jpg" %}" alt="Picture of Rango" /> <!-- New line -->
+    </div>
 {% endblock %}

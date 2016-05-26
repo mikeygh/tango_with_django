@@ -1,31 +1,46 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Index{% endblock %}
 
-{% block body_block %}
-
+	{% block body_block %}
+	
+    <div class="page-header">
     {% if user.is_authenticated %}
 		<h1>Rango says... hello {{ user.username }}!</h1>
 	{% else %}
 		<h1>Rango says... hello world!</h1>
 	{% endif %}
-        {% if categories %}
-            <ul>
-                {% for category in categories %}
-                <!-- Following line changed to add an HTML hyperlink -->
-                <li><a href="{% url 'category' category.slug %}">{{ category.name }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <strong>There are no categories present.</strong>
-        {% endif %}
-        <h1>Top 5 Pages:</h1>
-        {% if pageviews_list %}
-            <ul>
-                {% for page in pageviews_list %}
-                  <!-- Following line changed to add an HTML hyperlink -->
-                  <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <strong>There are no Pages present.</strong>
-        {% endif %}
+	</div>
+	    <div class="panel panel-primary">
+        <div class="panel-heading">
+        	<h3 class="panel-title"> Top 5 Categories</h3>
+        		{% if categories %}
+            		<ul class="list-group"">
+                	{% for category in categories %}
+                	<!-- Following line changed to add an HTML hyperlink -->
+                	<li class="list-group-item"><a href="{% url 'category' category.slug %}">{{ category.name }}</a></li>
+                	{% endfor %}
+            		</ul>
+        		{% else %}
+            		<strong>There are no categories present.</strong>
+        		{% endif %}
+        	</div>
+        </div>
+        <div class="panel panel-primary">
+        <div class="panel-heading">
+        	<h3 class="panel-title">Top 5 Pages</h3>
+        
+        	{% if pageviews_list %}
+            	<ul class="list-group">
+                	{% for page in pageviews_list %}
+                  	<!-- Following line changed to add an HTML hyperlink -->
+                  	<li class="list-group-item"><a href="{{ page.url }}">{{ page.title }}</a></li>
+                	{% endfor %}
+            	</ul>
+        	{% else %}
+            	<strong>There are no Pages present.</strong>
+        	{% endif %}
+        </div>
+      	</div>
+<p> visits: {{ visits }}</p>  
 {% endblock %}
